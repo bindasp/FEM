@@ -1,14 +1,11 @@
 import org.apache.commons.math3.linear.*;
 
-import java.util.Arrays;
-
 public class Soe {
     public int n;
     public double [][] Hg;
     public double [] Pg;
     public double [][] Cg;
     public double [][] result;
-
 
     Soe(int n){
         this.n=n;
@@ -20,6 +17,7 @@ public class Soe {
     }
 
     public void agregate(Element element){
+        //Agregacja macierzy H, C i wektora P
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 Hg[element.ID[i]-1][element.ID[j]-1] += element.H[i][j];
@@ -28,22 +26,28 @@ public class Soe {
             Pg[element.ID[i]-1]+=element.P[i];
         }
     }
-
-
+    //Funkcja do obliczania układów równań metodą LU
     public RealVector LUDecomposition(double[][] A, double[] R) {
         RealMatrix coefficientMatrix = MatrixUtils.createRealMatrix(A);
         DecompositionSolver solver = new LUDecomposition(coefficientMatrix).getSolver();
         RealVector constants = new ArrayRealVector(R);
-        RealVector solution = solver.solve(constants);
 
-        return solution;
+        return solver.solve(constants);
     }
 
-    public double [][][] calculate(double simulationStepTime, double [] initialTemp){
-        System.out.println(Arrays.toString(initialTemp));
-        double [][] Cl = Cg;
-        double [] Pl = Pg;
-        double [][] Hl = Hg;
+    public RealVector calculate(double simulationStepTime, double [] initialTemp){
+        //Symulacja nieustalonego procesu cieplnego
+        double [][] Cl = new double[n][n];
+        double [] Pl = new double[n];
+        double [][] Hl = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                Cl[i][j] = Cg[i][j];
+                Hl[i][j] = Hg[i][j];
+            }
+            Pl[i] = Pg[i];
+        }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 Cl[i][j] /= simulationStepTime;
@@ -51,10 +55,8 @@ public class Soe {
                 Hl[i][j]+= Cl[i][j];
             }
         }
-        double [][][] tab = new double[2][n][n];
-        tab[0] = Hl;
-        tab[1][0] = Pl;
-        return tab;
+
+        return LUDecomposition(Hl, Pl);
     }
 }
 

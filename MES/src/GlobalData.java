@@ -1,18 +1,16 @@
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GlobalData {
     GlobalData(String filePath)
     {
-
         File file = new File(filePath);
         try{
             this.scanner = new Scanner(file);
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -32,16 +30,16 @@ public class GlobalData {
 
     public void printData()
     {
-        System.out.println(simulationTime);
-        System.out.println(simulationStepTime);
-        System.out.println(conductivity);
-        System.out.println(alfa);
-        System.out.println(tot);
-        System.out.println(initialTemp);
-        System.out.println(density);
-        System.out.println(specificHeat);
-        System.out.println(nodesNumber);
-        System.out.println(elementsNumber);
+        System.out.println("Simulation time:" + " " + simulationTime);
+        System.out.println("Simulation step time:" + " " +simulationStepTime);
+        System.out.println("Conductivity:" + " " +conductivity);
+        System.out.println("Alfa:" + " " +alfa);
+        System.out.println("Tot:" + " " +tot);
+        System.out.println("Initial temp:" + " " +initialTemp);
+        System.out.println("Density:" + " " +density);
+        System.out.println("Specific heat:" + " " +specificHeat);
+        System.out.println("Nodes number:" + " " +nodesNumber);
+        System.out.println("Elements number:" + " " +elementsNumber);
     }
     public void setGlobalData()
     {

@@ -1,8 +1,8 @@
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class ElementUniwersalny {
-    ElementUniwersalny(int n) {
+public class UniversalElement {
+    UniversalElement(int n) {
         ksi = new double[n * n][4];
         eta = new double[n * n][4];
         tabksi = new double[n * n][4];

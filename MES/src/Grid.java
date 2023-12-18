@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
 
+
 public class Grid {
     public Element[] elements;
     public Node[] nodes;
@@ -11,7 +12,7 @@ public class Grid {
         try {
             this.scanner = new Scanner(file);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         elements = new Element[elementsNumber];
         nodes = new Node[nodesNumber];
@@ -19,8 +20,7 @@ public class Grid {
 
     public void setNodes() {
         while (!(scanner.next().equals("Node"))) {
-            String line = scanner.nextLine();
-
+            scanner.nextLine();
         }
 
         for (int i = 0; i < nodes.length; i++) {
@@ -39,7 +39,6 @@ public class Grid {
     }
 
     public void setElements() {
-
         scanner.next();
         scanner.next();
         for (int i = 0; i < elements.length; i++) {
@@ -51,7 +50,12 @@ public class Grid {
             element.ID[2] = Integer.parseInt(scanner.next().replace(",", ""));
             element.ID[3] = Integer.parseInt(scanner.next().replace(",", ""));
             elements[i] = element;
-
+        }
+    }
+    public void setBC() {
+        scanner.next();
+        while (scanner.hasNext()) {
+            nodes[Integer.parseInt(scanner.next().replace(",", "")) - 1].BC = 1;
         }
     }
 
@@ -62,8 +66,8 @@ public class Grid {
     }
 
     void print(double[][] tab) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < tab.length; i++) {
+            for (int j = 0; j < tab.length; j++) {
                 System.out.printf("%.6f" + " ", tab[i][j]);
             }
             System.out.println();
