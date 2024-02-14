@@ -10,7 +10,7 @@
 Program for Finite Element Method classes generating temperature distribution over time within a 2D element. 
 
 ## Technologies
-* Java version: 8.0
+* Java version: 21.0
 * commons-math3 library: 3.6.1
 
 ## Setup
