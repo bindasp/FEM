@@ -39,12 +39,19 @@ public class Main {
 
         System.out.println("Podaj liczbę punktów");
         int n = scanner.nextInt();
+        Gauss gauss = new Gauss(n);
 
         //Tworzenie elementu uniwersalnego i wczytanie danych
         //--------------------------------------------------------------------------
         UniversalElement universalElement = new UniversalElement(n);
         universalElement.importData(n);
         universalElement.setSurfaces();
+        for (int i = 0; i < n * n; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(universalElement.eta[i][j] + " ");
+            }
+            System.out.println();
+        }
         //--------------------------------------------------------------------------
 
         Soe soe = new Soe(data.nodesNumber);
@@ -102,7 +109,7 @@ public class Main {
             }
             System.out.println();
         }
-         System.out.println();
+        System.out.println();
 
         //Wektor globalny P
         //--------------------------------------------------------------------------
@@ -158,13 +165,13 @@ public class Main {
             initialTemp = Tw.toArray();
 
             //Eksportowanie danych do plikku .vtk
-            exportData.export(data, grid, Tw,"E:\\studia\\semestr 5\\MES\\MES\\wyniki\\foo" + i+".vtk");
+            exportData.export(data, grid, Tw, "E:\\studia\\semestr 5\\MES\\MES\\wyniki\\foo" + i + ".vtk");
 
-            System.out.println();
+            double tmin = Arrays.stream(Tw.toArray()).min().orElse(0);
+            double tmax = Arrays.stream(Tw.toArray()).max().orElse(0);
             System.out.println("Temperatura po czasie: " + l + "s");
-            for (int j = 0; j < data.nodesNumber; j++) {
-                System.out.println("T" + j + " " + Tw.getEntry(j));
-            }
+            System.out.println("Tmin = " + tmin + " Tmax = " + tmax);
+
             l += data.simulationStepTime;
         }
         //--------------------------------------------------------------------------
